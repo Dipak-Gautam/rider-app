@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "rider-app",
+    "slug": "my-app",
+    "scheme": "my-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff",
+      "hideExponentText": true
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "35a20488-758b-4906-a9b6-5fa4df37d6da"
+      }
+    },
+    "android": {
+      "package": "com.dipakgautam.myapp"
+    }
+  }
+}
