@@ -9,6 +9,7 @@ import TextInputControllers from "../../src/Components/Controllers/TextInputCont
 import { useSearchParams } from "expo-router/build/hooks";
 import SecureFetch from "../../src/ApiServices/SecureFetch";
 import MessageModal from "../../src/Components/Modal/MessageModal";
+import SuccessModal from "../../src/Components/Modal/SuccessModal";
 
 const changePasswordSchema = z
   .object({
@@ -114,9 +115,8 @@ const ChangePassword = () => {
         </View>
       </SafeAreaView>
       {visible && (
-        <MessageModal
+        <SuccessModal
           setModal={setModal}
-          visible={visible}
           message="Password changed sucessfully"
         />
       )}

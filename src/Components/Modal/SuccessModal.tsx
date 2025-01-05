@@ -1,32 +1,25 @@
-import { Ionicons, Octicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { SetStateAction } from "react";
-import { Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface MessageModalProp {
-  visible: boolean;
+interface SuccessModalProp {
   setModal: React.Dispatch<SetStateAction<boolean>>;
   message: string;
   divert?: boolean;
   token?: string;
 }
 
-const MessageModal = ({
-  visible,
+const SuccessModal = ({
   setModal,
   message,
   divert,
   token,
-}: MessageModalProp) => {
+}: SuccessModalProp) => {
   return (
-    <Modal
-      className="flex-1   "
-      transparent={true}
-      visible={visible}
-      statusBarTranslucent={true}
-    >
+    <View className="flex-1 w-[100vw] h-full absolute">
       <View className="flex-1 bg-black/50">
         <SafeAreaView className="flex-1">
           <TouchableOpacity
@@ -47,12 +40,10 @@ const MessageModal = ({
                 className="p-2 bg-orange-400 rounded-3xl my-3 "
                 onPress={() => {
                   setModal(false),
-                    divert
-                      ? router.replace({
-                          pathname: "/HomeApp/Order",
-                          params: { token: token },
-                        })
-                      : router.back();
+                    router.replace({
+                      pathname: "/HomeApp/Setting",
+                      params: { token: token },
+                    });
                 }}
               >
                 <Text className="text-base text-white text-center font-bold">
@@ -63,8 +54,8 @@ const MessageModal = ({
           </TouchableOpacity>
         </SafeAreaView>
       </View>
-    </Modal>
+    </View>
   );
 };
 
-export default MessageModal;
+export default SuccessModal;

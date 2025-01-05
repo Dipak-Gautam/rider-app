@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 interface OtpModalProp {
   visible: boolean;
@@ -18,10 +16,10 @@ interface OtpModalProp {
   setSuccess: React.Dispatch<SetStateAction<boolean>>;
   handleCancle: () => void;
   actualOtp: string;
-  Token: string | undefined;
 }
 
 const asyncStorage = async () => {
+  await AsyncStorage.setItem("unSyncOrders", "order data");
   await AsyncStorage.setItem("orderProgress", "false");
   await AsyncStorage.removeItem("orderData");
 };
@@ -31,7 +29,7 @@ const OtpModal = ({
   setModal,
   handleCancle,
   actualOtp,
-  Token,
+
   setSuccess,
 }: OtpModalProp) => {
   const [otp, setOtp] = useState("");
@@ -47,7 +45,6 @@ const OtpModal = ({
     }
   };
   console.log("actual otp", actualOtp);
-
   return (
     <Modal
       className="flex-1 "

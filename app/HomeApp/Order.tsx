@@ -1,23 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Text, View, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SecureFetch from "../../src/ApiServices/SecureFetch";
-import { mainEndpoint } from "../../src/ApiServices/endpoints";
 import { useSearchParams } from "expo-router/build/hooks";
 import { IOrderprop } from "../../src/Schema/orders.chema";
 import OrderCard from "../../src/Components/OrderComponent/OrderCard";
 import * as Notifications from "expo-notifications";
-import hasNewElements from "../../src/Components/Functions/newElement";
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import Header from "../../src/Components/Header/Header";
 import { AntDesign } from "@expo/vector-icons";
 import { SwipeListView } from "react-native-swipe-list-view";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import sendNotification from "../../src/Functions/OrderFunctions/SendNotification";
 import * as Network from "expo-network";
 import getOrder from "../../src/Functions/OrderFunctions/getOrder";
 import handleAccept from "../../src/Functions/OrderFunctions/handleAccept";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -72,6 +67,19 @@ const Order = () => {
     const intervalId = setInterval(executeFunction, 10000);
     return () => clearInterval(intervalId);
   }, [lastExecuted]);
+
+  useEffect(() => {
+    const checkUnSyncOrder = async () => {
+      const orderData = await AsyncStorage.getItem("unSyncOrders");
+      if (orderData != null) {
+        await AsyncStorage.removeItem("unSyncOrders");
+        console.log(
+          "this function will call if there are any order which are delevered while off line and are updated to backend"
+        );
+      }
+    };
+    checkUnSyncOrder();
+  }, [isConnected]);
 
   return (
     <SafeAreaView className="bg-white flex-1">

@@ -169,7 +169,6 @@ const ProgessOrder = () => {
             setModal={setModal}
             handleCancle={handleCancle}
             actualOtp={orderDetails.otpCode}
-            Token={Token.current}
             setSuccess={setSuccess}
           />
           <MessageModal

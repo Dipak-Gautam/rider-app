@@ -14,6 +14,7 @@ import SecureFetch from "../../src/ApiServices/SecureFetch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInputControllers from "../../src/Components/Controllers/TextInputControllers";
 import MessageModal from "../../src/Components/Modal/MessageModal";
+import SuccessModal from "../../src/Components/Modal/SuccessModal";
 
 const updateProfileSchema = z.object({
   name: z.string().min(2, "Name must be min 2 character long"),
@@ -108,6 +109,7 @@ const UpdateProfile = () => {
               name="phoneNumber"
               placeholder="Enter your Phone Number"
               errors={errors}
+              keyboardType="numeric"
             />
           </View>
 
@@ -134,6 +136,7 @@ const UpdateProfile = () => {
                   name="zipCode"
                   placeholder="Enter Zip/Postal Code"
                   errors={errors}
+                  keyboardType="numeric"
                 />
               </View>
             </View>
@@ -190,9 +193,8 @@ const UpdateProfile = () => {
         </View>
       </ScrollView>
       {visible && (
-        <MessageModal
+        <SuccessModal
           setModal={setModal}
-          visible={visible}
           message="Profile Updated sucessfully"
         />
       )}

@@ -24,7 +24,7 @@ const Setting = () => {
         <FontAwesome name="user-circle-o" color={"gray"} size={85} />
       </View>
       <View className="my-3">
-        <Text>{userData?.name}</Text>
+        <Text className="text-center">{userData?.name}</Text>
         <Text>{userData?.mobile}</Text>
       </View>
       <View className="w-full px-2">
@@ -35,7 +35,7 @@ const Setting = () => {
           <TouchableOpacity
             className="flex-row my-2 gap-4 items-center justify-between "
             onPress={() =>
-              router.navigate({
+              router.replace({
                 pathname: "/SettingNav/UpdateProfile",
                 params: {
                   token: token,
@@ -58,12 +58,13 @@ const Setting = () => {
           <TouchableOpacity
             className="flex-row my-2 gap-4 items-center justify-between "
             onPress={() => {
-              router.navigate({
-                pathname: "/SettingNav/ChangePassword",
-                params: {
-                  token: token,
-                },
-              });
+              console.log("change password called"),
+                router.replace({
+                  pathname: "/SettingNav/ChangePassword",
+                  params: {
+                    token: token,
+                  },
+                });
             }}
           >
             <View className="w-8">
