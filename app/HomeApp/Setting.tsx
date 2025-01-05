@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import SecureFetch from "../../src/ApiServices/SecureFetch";
-import { userEndPoint } from "../../src/ApiServices/endpoints";
 import { useRouter, useSearchParams } from "expo-router/build/hooks";
 import { IUserProp } from "../../src/Schema/user.schema";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import getData from "../../src/Functions/Settings/getData";
+import handleLogOut from "../../src/Functions/Settings/handleLogout";
 
 const Setting = () => {
   const router = useRouter();
@@ -21,36 +14,8 @@ const Setting = () => {
   let token = searchParams.get("token");
   const [userData, setUserData] = useState<IUserProp>();
 
-  const getData = async () => {
-    const request = await SecureFetch({
-      url: `${userEndPoint}/profile`,
-      header: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      method: "GET",
-    });
-    const response = await request.json();
-    if (request.status == 200) {
-      setUserData(response.data);
-    }
-  };
-
-  const handleLogOut = () => {
-    Alert.alert("Log Out", "Are you sure you want to LogOut?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Yes",
-        onPress: async () => {
-          await AsyncStorage.removeItem("Token");
-          router.navigate("Login");
-        },
-      },
-    ]);
-  };
-
   useEffect(() => {
-    getData();
+    getData(token, setUserData);
   }, []);
 
   return (

@@ -60,59 +60,67 @@ const ChangePassword = () => {
     }
   };
   return (
-    <SafeAreaView className="flex flex-1  px-8 bg-white">
-      <View className="gap-8 w-full">
-        <View>
-          <Text className="text-black text-xl font-semibold">
-            ChangePassword
-          </Text>
-        </View>
+    <>
+      <SafeAreaView className="flex flex-1  px-8 bg-white">
+        <View className="gap-8 w-full">
+          <View>
+            <Text className="text-black text-xl font-semibold">
+              ChangePassword
+            </Text>
+          </View>
 
-        <View>
-          <TextInputControllers
-            control={control}
-            errors={errors}
-            name="password"
-            placeholder="Current Password"
-          />
-          <TextInputControllers
-            control={control}
-            errors={errors}
-            name="newPassword"
-            placeholder="New Password"
-          />
-          <TextInputControllers
-            control={control}
-            errors={errors}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-          />
-        </View>
+          <View>
+            <TextInputControllers
+              control={control}
+              errors={errors}
+              name="password"
+              placeholder="Current Password"
+            />
+            <TextInputControllers
+              control={control}
+              errors={errors}
+              name="newPassword"
+              placeholder="New Password"
+            />
+            <TextInputControllers
+              control={control}
+              errors={errors}
+              name="confirmPassword"
+              placeholder="Confirm Password"
+            />
+          </View>
 
-        <TouchableOpacity
-          onPress={handleSubmit(onSubbmit)}
-          disabled={isSubmitting}
-        >
-          <Text
-            className={`w-full p-2 text-center rounded-xl ${
-              isSubmitting ? "bg-[#896f3d]" : "bg-[#ffb727]"
-            }  text-white font-semibold mt-4`}
+          <TouchableOpacity
+            onPress={handleSubmit(onSubbmit)}
+            disabled={isSubmitting}
           >
-            {isSubmitting ? <Text>Submitting...</Text> : <Text>Continue</Text>}
-          </Text>
-        </TouchableOpacity>
-        <View className="justify-center  items-center">
-          <Text className="text-red-400 text-sm ml-2 text-center">
-            {errors.root?.message}
-          </Text>
+            <Text
+              className={`w-full p-2 text-center rounded-xl ${
+                isSubmitting ? "bg-[#896f3d]" : "bg-[#ffb727]"
+              }  text-white font-semibold mt-4`}
+            >
+              {isSubmitting ? (
+                <Text>Submitting...</Text>
+              ) : (
+                <Text>Continue</Text>
+              )}
+            </Text>
+          </TouchableOpacity>
+          <View className="justify-center  items-center">
+            <Text className="text-red-400 text-sm ml-2 text-center">
+              {errors.root?.message}
+            </Text>
+          </View>
         </View>
-      </View>
-      <MessageModal
-        setModal={setModal}
-        visible={visible}
-        message="Password changed sucessfully"
-      />
-    </SafeAreaView>
+      </SafeAreaView>
+      {visible && (
+        <MessageModal
+          setModal={setModal}
+          visible={visible}
+          message="Password changed sucessfully"
+        />
+      )}
+    </>
   );
 };
 

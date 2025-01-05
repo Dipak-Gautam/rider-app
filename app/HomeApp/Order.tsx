@@ -1,18 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SecureFetch from "../../src/ApiServices/SecureFetch";
 import { mainEndpoint } from "../../src/ApiServices/endpoints";
 import { useSearchParams } from "expo-router/build/hooks";
 import { IOrderprop } from "../../src/Schema/orders.chema";
 import OrderCard from "../../src/Components/OrderComponent/OrderCard";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
-import * as Network from "expo-network";
 import hasNewElements from "../../src/Components/Functions/newElement";
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import Header from "../../src/Components/Header/Header";
 import { AntDesign } from "@expo/vector-icons";
+import { SwipeListView } from "react-native-swipe-list-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import sendNotification from "../../src/Functions/OrderFunctions/SendNotification";
+import * as Network from "expo-network";
+import getOrder from "../../src/Functions/OrderFunctions/getOrder";
+import handleAccept from "../../src/Functions/OrderFunctions/handleAccept";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -28,49 +33,13 @@ const Order = () => {
   const [allOrders, setOrders] = useState([]);
   const prevOrders = useRef([]);
   const [isConnected, setIsConnected] = useState<boolean | undefined>(false);
+  const [lock, setLock] = useState(false);
 
   const checkConnection = async () => {
     const networkState = await Network.getNetworkStateAsync();
     setIsConnected(
       networkState.isConnected && networkState.isInternetReachable
     );
-  };
-
-  const sendNotification = async () => {
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Delevery Avialiable",
-          body: "Order are waiting for you please accept the orders",
-          sound: "default",
-        },
-        trigger: null,
-      });
-      console.log("Notification sent manually.");
-    } catch (error) {
-      console.error("Error sending notification:", error);
-    }
-  };
-
-  const getOrder = async () => {
-    const request = await SecureFetch({
-      url: `${mainEndpoint}/order/all`,
-      header: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      method: "GET",
-    });
-    const response = await request.json();
-
-    if (request.status == 200) {
-      const temp = hasNewElements(prevOrders.current, response);
-      if (temp == true) {
-        sendNotification();
-      }
-      setOrders(response);
-      prevOrders.current = response;
-    }
   };
 
   useFocusEffect(
@@ -81,7 +50,7 @@ const Order = () => {
           await Notifications.requestPermissionsAsync();
         }
       };
-      getOrder();
+      getOrder(token, prevOrders, setOrders);
       checkConnection();
       requestPermissions();
     }, [])
@@ -91,7 +60,7 @@ const Order = () => {
   const executeFunction = () => {
     const currentTime = Date.now();
     if (currentTime - lastExecuted >= 10000) {
-      getOrder();
+      getOrder(token, prevOrders, setOrders);
       checkConnection();
       setLastExecuted(currentTime);
     } else {
@@ -105,33 +74,53 @@ const Order = () => {
   }, [lastExecuted]);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView className="bg-white flex-1">
-        <Header name="Orders" token={token} />
-        <Text className="p-3 mx-4 text-base border my-3 mt-5 rounded-2xl border-gray-400 text-center bg-[#fde5d4]">
-          <Text>
-            <AntDesign name="left" />
-            <AntDesign name="left" />
-          </Text>{" "}
-          Swipe Left to accept Orders
-        </Text>
-        {isConnected ? (
-          <ScrollView className="pt-1">
-            {allOrders.map((item: IOrderprop) => (
-              <View key={item._id} className="my-2">
-                <OrderCard order={item} token={token} />
+    <SafeAreaView className="bg-white flex-1">
+      <Header name="Orders" token={token} />
+      <Text className="p-3 mx-4 text-base border my-3 mt-5 rounded-2xl border-gray-400 text-center bg-[#fde5d4]">
+        <Text>
+          <AntDesign name="left" />
+          <AntDesign name="left" />
+        </Text>{" "}
+        Swipe Left to accept Orders
+      </Text>
+      {isConnected ? (
+        <SwipeListView
+          data={allOrders}
+          keyExtractor={(item: IOrderprop) => item._id}
+          renderItem={({ item }) => (
+            <View key={item._id} className="my-2">
+              <OrderCard order={item} />
+            </View>
+          )}
+          renderHiddenItem={() => (
+            <View className="bg-white h-full justify-center items-end px-5">
+              <View className="flex-row gap-3 mr-5">
+                <Text className="text-lg ">Accepting</Text>
+                <ActivityIndicator color={"orange"} size={25} />
               </View>
-            ))}
-          </ScrollView>
-        ) : (
-          <View className="flex-1 justify-center  items-center">
-            <Text>No internet connection</Text>
-          </View>
-        )}
-
-        <View className="p-4"></View>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+            </View>
+          )}
+          leftOpenValue={0}
+          rightOpenValue={-150}
+          disableRightSwipe
+          disableLeftSwipe={lock}
+          onSwipeValueChange={({ key, value }) => {
+            if (value < -150 && !lock) {
+              const item = allOrders.find(
+                (order: IOrderprop) => order._id === key
+              );
+              if (item) {
+                handleAccept(key, item, setLock, token);
+              }
+            }
+          }}
+        />
+      ) : (
+        <View className="flex-1 justify-center  items-center">
+          <Text>No internet connection</Text>
+        </View>
+      )}
+    </SafeAreaView>
   );
 };
 

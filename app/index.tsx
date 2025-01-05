@@ -1,14 +1,7 @@
 import { router, useFocusEffect } from "expo-router";
 import React, { useEffect } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  BackHandler,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { ActivityIndicator, Alert, BackHandler, View } from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const index = () => {

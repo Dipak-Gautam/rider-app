@@ -87,108 +87,116 @@ const UpdateProfile = () => {
     }
   };
   return (
-    <ScrollView className="flex-1 bg-white px-4 py-4">
-      <View className="gap-5 w-full">
-        <View>
-          <Text className="text-black text-xl font-semibold">
-            Update Persional Info
-          </Text>
-        </View>
-
-        <View className="">
-          <TextInputControllers
-            control={control}
-            name="name"
-            placeholder="Enter your Full Name"
-            errors={errors}
-          />
-          <TextInputControllers
-            control={control}
-            name="phoneNumber"
-            placeholder="Enter your Phone Number"
-            errors={errors}
-          />
-        </View>
-
-        <View>
-          <Text className="text-black text-xl font-semibold">
-            Update Address
-          </Text>
-        </View>
-
-        <View className="">
-          <View className="flex-row w-[100%] justify-between">
-            <View className="w-[40%]">
-              <TextInputControllers
-                control={control}
-                name="state"
-                placeholder="Enter State"
-                errors={errors}
-              />
-            </View>
-
-            <View className="w-[50%]">
-              <TextInputControllers
-                control={control}
-                name="zipCode"
-                placeholder="Enter Zip/Postal Code"
-                errors={errors}
-              />
-            </View>
+    <>
+      <ScrollView className="flex-1 bg-white px-4 py-4">
+        <View className="gap-5 w-full">
+          <View>
+            <Text className="text-black text-xl font-semibold">
+              Update Persional Info
+            </Text>
           </View>
-          <TextInputControllers
-            control={control}
-            name="city"
-            placeholder="Enter your City"
-            errors={errors}
-          />
-          <TextInputControllers
-            control={control}
-            name="address"
-            placeholder="Enter your address"
-            errors={errors}
-          />
-          <Controller
-            name="deliveryInstructions"
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="border-b p-2 rounded-lg text-base text-black"
-                placeholder="Provide a delevery instruction"
-                placeholderTextColor="gray"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                multiline={true}
-              />
-            )}
-          />
-        </View>
 
-        <TouchableOpacity
-          onPress={handleSubmit(onSubbmit)}
-          disabled={isSubmitting || !hasChanges}
-        >
-          <Text
-            className={`w-full p-2 text-center rounded-xl ${
-              isSubmitting || !hasChanges ? "bg-[#896f3d]" : "bg-[#ffb727]"
-            }  text-white font-semibold mt-4`}
+          <View className="">
+            <TextInputControllers
+              control={control}
+              name="name"
+              placeholder="Enter your Full Name"
+              errors={errors}
+            />
+            <TextInputControllers
+              control={control}
+              name="phoneNumber"
+              placeholder="Enter your Phone Number"
+              errors={errors}
+            />
+          </View>
+
+          <View>
+            <Text className="text-black text-xl font-semibold">
+              Update Address
+            </Text>
+          </View>
+
+          <View className="">
+            <View className="flex-row w-[100%] justify-between">
+              <View className="w-[40%]">
+                <TextInputControllers
+                  control={control}
+                  name="state"
+                  placeholder="Enter State"
+                  errors={errors}
+                />
+              </View>
+
+              <View className="w-[50%]">
+                <TextInputControllers
+                  control={control}
+                  name="zipCode"
+                  placeholder="Enter Zip/Postal Code"
+                  errors={errors}
+                />
+              </View>
+            </View>
+            <TextInputControllers
+              control={control}
+              name="city"
+              placeholder="Enter your City"
+              errors={errors}
+            />
+            <TextInputControllers
+              control={control}
+              name="address"
+              placeholder="Enter your address"
+              errors={errors}
+            />
+            <Controller
+              name="deliveryInstructions"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  className="border-b p-2 rounded-lg text-base text-black"
+                  placeholder="Provide a delevery instruction"
+                  placeholderTextColor="gray"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  multiline={true}
+                />
+              )}
+            />
+          </View>
+
+          <TouchableOpacity
+            onPress={handleSubmit(onSubbmit)}
+            disabled={isSubmitting || !hasChanges}
           >
-            {isSubmitting ? <Text>Submitting...</Text> : <Text>Continue</Text>}
-          </Text>
-        </TouchableOpacity>
-        <View className="justify-center  items-center">
-          <Text className="text-red-400 text-sm ml-2 text-center">
-            {errors.root?.message}
-          </Text>
+            <Text
+              className={`w-full p-2 text-center rounded-xl ${
+                isSubmitting || !hasChanges ? "bg-[#896f3d]" : "bg-[#ffb727]"
+              }  text-white font-semibold mt-4`}
+            >
+              {isSubmitting ? (
+                <Text>Submitting...</Text>
+              ) : (
+                <Text>Continue</Text>
+              )}
+            </Text>
+          </TouchableOpacity>
+          <View className="justify-center  items-center">
+            <Text className="text-red-400 text-sm ml-2 text-center">
+              {errors.root?.message}
+            </Text>
+          </View>
         </View>
-      </View>
-      <MessageModal
-        setModal={setModal}
-        visible={visible}
-        message="Profile Updated sucessfully"
-      />
-    </ScrollView>
+      </ScrollView>
+      {visible && (
+        <MessageModal
+          setModal={setModal}
+          visible={visible}
+          message="Profile Updated sucessfully"
+        />
+      )}
+    </>
   );
 };
 
