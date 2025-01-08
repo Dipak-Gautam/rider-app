@@ -24,14 +24,14 @@ Ensure you have the following tools installed:
    ```
 
 3. **Update the API Endpoint**:
-   Navigate to `src/apiService/endpoint.js` (or `.ts` if using TypeScript) and update the endpoint URL to point to your API:
+   Navigate to `src/ApiServices/endpoint.ts`  and update the endpoint URL to point to your API:
    ```javascript
-   export const API_ENDPOINT = "https://your-api-url.com";
+   export const mainEndpoint = "https://your-api-url.com";
    ```
 
 4. **Start the Development Server**:
    ```bash
-   expo start
+   npx expo start
    ```
 
 5. **Run the App**:
@@ -52,7 +52,7 @@ Ensure your API endpoint is correctly configured before running the app. This is
 /src/apiService/endpoint.js
 ```
 
-Update the `API_ENDPOINT` variable to your desired API URL.
+Update the `mainEndpoint` variable to your desired API URL.
 
 ## Dependencies
 This project uses the following major dependencies:
@@ -66,18 +66,10 @@ This project uses the following major dependencies:
 
 - **Start the project**:
   ```bash
-  expo start
+  npx expo start
   ```
 
-- **Run on Android emulator**:
-  ```bash
-  expo start --android
-  ```
 
-- **Run on iOS simulator**:
-  ```bash
-  expo start --ios
-  ```
 
 ## Troubleshooting
 
