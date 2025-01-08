@@ -23,18 +23,20 @@ Ensure you have the following tools installed:
    npm install
    ```
 
-3. **Update the API Endpoint**:
+3. **If you want to use your own backend Update the API Endpoint else leave as it is:**:
+
+   
    Navigate to `src/ApiServices/endpoint.ts`  and update the endpoint URL to point to your API:
    ```javascript
    export const mainEndpoint = "https://your-api-url.com";
    ```
 
-4. **Start the Development Server**:
+5. **Start the Development Server**:
    ```bash
    npx expo start
    ```
 
-5. **Run the App**:
+6. **Run the App**:
    Open the Expo Go app on your device and scan the QR code displayed in your terminal or browser.
 
 ## Project Structure
