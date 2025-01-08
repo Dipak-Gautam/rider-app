@@ -23,17 +23,26 @@ const Setting = () => {
       <View className=" h-24 w-24 rounded-full justify-center items-center mx-auto  mt-4">
         <FontAwesome name="user-circle-o" color={"gray"} size={85} />
       </View>
-      <View className="my-3">
-        <Text className="text-center">{userData?.name}</Text>
-        <Text>{userData?.mobile}</Text>
-      </View>
+      {userData ? (
+        <View className="my-3">
+          <Text className="text-center">{userData?.name}</Text>
+          <Text>{userData?.mobile}</Text>
+        </View>
+      ) : (
+        <View className="my-3">
+          <Text className="text-center text-gray-400">loading...</Text>
+          <Text className="text-gray-400">loading...</Text>
+        </View>
+      )}
+
       <View className="w-full px-2">
         <View>
           <Text className="text-lg text-gray-700">Options</Text>
         </View>
         <View className="mt-3">
           <TouchableOpacity
-            className="flex-row my-2 gap-4 items-center justify-between "
+            disabled={!userData && true}
+            className={`flex-row my-2 gap-4 items-center justify-between  `}
             onPress={() =>
               router.replace({
                 pathname: "/SettingNav/UpdateProfile",
@@ -45,10 +54,20 @@ const Setting = () => {
             }
           >
             <View className="w-8">
-              <FontAwesome6 name="user-gear" size={23} />
+              <FontAwesome6
+                name="user-gear"
+                size={23}
+                color={`${userData ? "black" : "gray"}`}
+              />
             </View>
             <View className="flex-1">
-              <Text className="text-base font-medium">Profile Setting</Text>
+              <Text
+                className={`text-base font-medium ${
+                  userData ? "text-black" : "text-gray-400"
+                }`}
+              >
+                Profile Setting
+              </Text>
               <Text className="text-xs">Manage your profile</Text>
             </View>
             <View>
@@ -56,6 +75,7 @@ const Setting = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            disabled={!userData && true}
             className="flex-row my-2 gap-4 items-center justify-between "
             onPress={() => {
               console.log("change password called"),
@@ -68,10 +88,20 @@ const Setting = () => {
             }}
           >
             <View className="w-8">
-              <FontAwesome6 name="lock" size={23} />
+              <FontAwesome6
+                name="lock"
+                size={23}
+                color={`${userData ? "black" : "gray"}`}
+              />
             </View>
             <View className="flex-1">
-              <Text className="text-base font-medium">Security</Text>
+              <Text
+                className={`text-base font-medium ${
+                  userData ? "text-black" : "text-gray-400"
+                }`}
+              >
+                Security
+              </Text>
               <Text className="text-xs">Change password </Text>
             </View>
             <View>
