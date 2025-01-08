@@ -60,7 +60,7 @@ const UserSignup = () => {
       city: userData.userAddress.city,
       state: userData.userAddress.state,
       zipCode: userData.userAddress.zipCode,
-      deliveryInstructions: userData.userAddress.deliveryInstruction,
+      deliveryInstructions: userData.userAddress.deliveryInstructions,
       password: data.password,
       role: "rider",
     };
