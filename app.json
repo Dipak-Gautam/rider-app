@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rider-app",
-    "slug": "my-app",
+    "name": "Rider-app",
+    "slug": "rider-app",
     "scheme": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,11 +23,12 @@
         "origin": false
       },
       "eas": {
-        "projectId": "35a20488-758b-4906-a9b6-5fa4df37d6da"
+        "projectId": "766999f2-91f9-4367-89cb-817ea5d12f77"
       }
     },
     "android": {
       "package": "com.dipakgautam.myapp"
-    }
+    },
+    "owner": "dipakgautam"
   }
 }
