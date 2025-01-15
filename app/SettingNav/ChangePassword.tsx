@@ -118,6 +118,7 @@ const ChangePassword = () => {
         <SuccessModal
           setModal={setModal}
           message="Password changed sucessfully"
+          token={token}
         />
       )}
     </>

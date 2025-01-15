@@ -71,7 +71,7 @@ const UserAddress = () => {
                 name="zipCode"
                 placeholder="Enter Zip/Postal Code"
                 errors={errors}
-                keyboardType="numeric"
+                keyboardType="number-pad"
               />
             </View>
           </View>

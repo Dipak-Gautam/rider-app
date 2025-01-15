@@ -13,7 +13,6 @@ import { useSearchParams } from "expo-router/build/hooks";
 import SecureFetch from "../../src/ApiServices/SecureFetch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInputControllers from "../../src/Components/Controllers/TextInputControllers";
-import MessageModal from "../../src/Components/Modal/MessageModal";
 import SuccessModal from "../../src/Components/Modal/SuccessModal";
 
 const updateProfileSchema = z.object({
@@ -33,9 +32,7 @@ const UpdateProfile = () => {
   const temp = searchParams.get("userData");
   if (temp == null) return;
   const userData = JSON.parse(temp);
-
   const [visible, setModal] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -55,7 +52,6 @@ const UpdateProfile = () => {
     },
   });
   const watchedValues = watch();
-
   const hasChanges = Object.keys(watchedValues).some(
     (key) => dirtyFields[key as keyof updateProfileSchema]
   );
@@ -80,20 +76,20 @@ const UpdateProfile = () => {
       body: JSON.stringify(formdata),
     });
     const response = await request.json();
-
     if (request.status == 200) {
       setModal(true);
     } else {
       setError("root", { message: "Internal server error" });
     }
   };
+
   return (
     <>
       <ScrollView className="flex-1 bg-white px-4 py-4">
         <View className="gap-5 w-full">
           <View>
             <Text className="text-black text-xl font-semibold">
-              Update Persional Info
+              Update Personal Info
             </Text>
           </View>
 
@@ -158,7 +154,7 @@ const UpdateProfile = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   className="border-b p-2 rounded-lg text-base text-black"
-                  placeholder="Provide a delevery instruction"
+                  placeholder="Provide a delivery instruction"
                   placeholderTextColor="gray"
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -196,6 +192,7 @@ const UpdateProfile = () => {
         <SuccessModal
           setModal={setModal}
           message="Profile Updated sucessfully"
+          token={token}
         />
       )}
     </>

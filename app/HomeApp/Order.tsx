@@ -74,7 +74,7 @@ const Order = () => {
       if (orderData != null) {
         await AsyncStorage.removeItem("unSyncOrders");
         console.log(
-          "this function will call if there are any order which are delevered while off line and are updated to backend"
+          "this function will call if there are any order which are delivered while off line and are updated to backend"
         );
       }
     };

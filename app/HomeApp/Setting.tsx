@@ -13,7 +13,6 @@ const Setting = () => {
   const searchParams = useSearchParams();
   let token = searchParams.get("token");
   const [userData, setUserData] = useState<IUserProp>();
-
   useEffect(() => {
     getData(token, setUserData);
   }, []);
@@ -43,15 +42,15 @@ const Setting = () => {
           <TouchableOpacity
             disabled={!userData && true}
             className={`flex-row my-2 gap-4 items-center justify-between  `}
-            onPress={() =>
+            onPress={() => {
               router.replace({
                 pathname: "/SettingNav/UpdateProfile",
                 params: {
                   token: token,
                   userData: JSON.stringify(userData),
                 },
-              })
-            }
+              });
+            }}
           >
             <View className="w-8">
               <FontAwesome6
@@ -77,15 +76,14 @@ const Setting = () => {
           <TouchableOpacity
             disabled={!userData && true}
             className="flex-row my-2 gap-4 items-center justify-between "
-            onPress={() => {
-              console.log("change password called"),
-                router.replace({
-                  pathname: "/SettingNav/ChangePassword",
-                  params: {
-                    token: token,
-                  },
-                });
-            }}
+            onPress={() =>
+              router.replace({
+                pathname: "/SettingNav/ChangePassword",
+                params: {
+                  token: token,
+                },
+              })
+            }
           >
             <View className="w-8">
               <FontAwesome6

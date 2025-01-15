@@ -8,16 +8,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 interface SuccessModalProp {
   setModal: React.Dispatch<SetStateAction<boolean>>;
   message: string;
-  divert?: boolean;
-  token?: string;
+  token?: string | null;
 }
 
-const SuccessModal = ({
-  setModal,
-  message,
-  divert,
-  token,
-}: SuccessModalProp) => {
+const SuccessModal = ({ setModal, message, token }: SuccessModalProp) => {
   return (
     <View className="flex-1 w-[100vw] h-full absolute">
       <View className="flex-1 bg-black/50">
@@ -39,7 +33,8 @@ const SuccessModal = ({
               <TouchableOpacity
                 className="p-2 bg-orange-400 rounded-3xl my-3 "
                 onPress={() => {
-                  setModal(false),
+                  console.log("token", token),
+                    setModal(false),
                     router.replace({
                       pathname: "/HomeApp/Setting",
                       params: { token: token },

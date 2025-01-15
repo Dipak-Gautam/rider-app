@@ -76,7 +76,7 @@ const OtpModal = ({
               </View>
               <View>
                 <TextInput
-                  keyboardType="numeric"
+                  keyboardType="number-pad"
                   className="border border-gray-400 rounded-lg text-sm px-3"
                   onChangeText={setOtp}
                   placeholder="Enter OTP"

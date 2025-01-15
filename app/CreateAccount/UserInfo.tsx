@@ -52,7 +52,7 @@ const UserInfo = () => {
             name="phoneNumber"
             placeholder="Enter your Phone Number"
             errors={errors}
-            keyboardType="numeric"
+            keyboardType="number-pad"
           />
         </View>
         <TouchableOpacity
