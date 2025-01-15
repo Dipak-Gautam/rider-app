@@ -64,7 +64,7 @@ const UserSignup = () => {
       password: data.password,
       role: "rider",
     };
-    console.log("form data", formData);
+
     const request = await SecureFetch({
       url: `${userEndPoint}/signup`,
       header: { "content-type": "application/json" },
@@ -72,7 +72,7 @@ const UserSignup = () => {
       body: JSON.stringify(formData),
     });
     const response = await request.json();
-
+    console.log("response", response);
     if (request.status == 200) {
       asyncStorage(response.token);
       router.replace({
@@ -80,9 +80,13 @@ const UserSignup = () => {
         params: { token: response.token },
       });
     } else {
-      setError("root", {
-        message: "Internal server error. Please try again later",
-      });
+      if (response.code == "11000") {
+        setError("email", { message: "email already taken" });
+      } else {
+        setError("root", {
+          message: "Internal server error. Please try again later",
+        });
+      }
     }
   };
   return (

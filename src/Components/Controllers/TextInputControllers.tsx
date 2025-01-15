@@ -25,7 +25,9 @@ const TextInputControllers = ({
         render={({ field: { onChange, onBlur, value } }) => (
           <FloatingLabelInput
             label={placeholder}
-            className="border-b p-1 rounded-lg text-base text-black translate-y-3 my-1"
+            className={`border-b ${
+              errors[name] && "border-red-500"
+            } p-1 rounded-lg text-base text-black translate-y-3 my-1`}
             placeholder={placeholder}
             placeholderTextColor="gray"
             onBlur={onBlur}
@@ -45,7 +47,7 @@ const TextInputControllers = ({
           />
         )}
       />
-      <View className="h-4">
+      <View className="h-5">
         {errors[name] && (
           <Text className="text-red-400 text-xs translate-y-2 ml-2 ">
             {errors[name].message}

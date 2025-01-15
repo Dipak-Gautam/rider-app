@@ -47,6 +47,7 @@ const Login = () => {
       body: JSON.stringify(formdata),
     });
     const response = await request.json();
+
     if (request.status == 200) {
       asyncStorage(response.token);
       router.replace({
@@ -55,7 +56,7 @@ const Login = () => {
       });
     } else {
       setError("root", {
-        message: "Internal server error. Please try again later",
+        message: response.message || "Internal server error",
       });
     }
   };
@@ -98,6 +99,11 @@ const Login = () => {
               {isSubmitting ? <Text>Submitting...</Text> : <Text>Sign in</Text>}
             </Text>
           </TouchableOpacity>
+          <View className="justify-center  items-center">
+            <Text className="text-red-400 text-sm ml-2 text-center">
+              {errors.root?.message}
+            </Text>
+          </View>
         </View>
 
         <View className="flex-row w-full justify-center items-center gap-5 mt-10">
