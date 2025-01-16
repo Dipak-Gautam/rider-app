@@ -33,8 +33,7 @@ const SuccessModal = ({ setModal, message, token }: SuccessModalProp) => {
               <TouchableOpacity
                 className="p-2 bg-orange-400 rounded-3xl my-3 "
                 onPress={() => {
-                  console.log("token", token),
-                    setModal(false),
+                  setModal(false),
                     router.replace({
                       pathname: "/HomeApp/Setting",
                       params: { token: token },
