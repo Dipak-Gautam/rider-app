@@ -13,6 +13,7 @@ import * as Network from "expo-network";
 import getOrder from "../../src/Functions/OrderFunctions/getOrder";
 import handleAccept from "../../src/Functions/OrderFunctions/handleAccept";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import postDeliveryApi from "../../src/ApiServices/postDelivery.api";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -73,11 +74,10 @@ const Order = () => {
       const orderData = await AsyncStorage.getItem("unSyncOrders");
       if (orderData != null) {
         await AsyncStorage.removeItem("unSyncOrders");
-        console.log(
-          "this function will call if there are any order which are delivered while off line and are updated to backend"
-        );
+        postDeliveryApi(token);
       }
     };
+    setLock(false);
     checkUnSyncOrder();
   }, [isConnected]);
 

@@ -170,9 +170,10 @@ const ProgessOrder = () => {
             handleCancle={handleCancle}
             actualOtp={orderDetails.otpCode}
             setSuccess={setSuccess}
+            token={Token.current}
           />
           <MessageModal
-            message="Order delevery successfull"
+            message="Order delivery successful"
             visible={success}
             setModal={setSuccess}
             divert={true}

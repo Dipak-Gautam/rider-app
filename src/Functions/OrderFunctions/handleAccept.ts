@@ -26,13 +26,12 @@ const handleAccept = async (
   if (request.status == 200) {
     await AsyncStorage.setItem("orderProgress", "true");
     await AsyncStorage.setItem("orderData", JSON.stringify(order));
-
     router.replace({
       pathname: "/HomeApp/ProgressOrder",
       params: { orderData: JSON.stringify(order) },
     });
-    setLock(false);
   }
+  setLock(false);
 };
 
 export default handleAccept;

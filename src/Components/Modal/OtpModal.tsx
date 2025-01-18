@@ -10,18 +10,20 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 interface OtpModalProp {
   visible: boolean;
   setModal: React.Dispatch<SetStateAction<boolean>>;
   setSuccess: React.Dispatch<SetStateAction<boolean>>;
   handleCancle: () => void;
   actualOtp: string;
+  token: string;
 }
 
-const asyncStorage = async () => {
-  await AsyncStorage.setItem("unSyncOrders", "order data");
+const asyncStorage = async (token: string) => {
+  await AsyncStorage.setItem("unSyncOrders", "true");
   await AsyncStorage.setItem("orderProgress", "false");
-  await AsyncStorage.removeItem("orderData");
+  // await AsyncStorage.removeItem("orderData");
 };
 
 const OtpModal = ({
@@ -29,7 +31,7 @@ const OtpModal = ({
   setModal,
   handleCancle,
   actualOtp,
-
+  token,
   setSuccess,
 }: OtpModalProp) => {
   const [otp, setOtp] = useState("");
@@ -37,7 +39,7 @@ const OtpModal = ({
 
   const handleOtpSubbmit = () => {
     if (actualOtp == otp) {
-      asyncStorage();
+      asyncStorage(token);
       setSuccess(true);
       setError(false);
     } else {
@@ -45,6 +47,7 @@ const OtpModal = ({
     }
   };
   console.log("actual otp", actualOtp);
+
   return (
     <Modal
       className="flex-1 "
